@@ -1,0 +1,45 @@
+body {
+   background-color: #f7f5ed;
+}
+.vertical-center {
+   margin: 0;
+   position: absolute;
+   top: 50%;
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+}
+.center-inner {
+   display: table;
+   margin: 0 auto;
+}
+
+.center-outer {
+   width: 100%;
+}
+.center {
+   margin: auto;
+   text-align: center;
+}
+.formBox {
+   background-color: #fff;
+   border-radius: 6px;
+   padding: 10px;
+   min-width: 100px;
+   min-height: 100px;
+   border: 1px solid #eeeeee;
+}
+.shadow_sm {
+   -webkit-box-shadow: 3px 3px 3px 0px rgba(153, 153, 153, 1);
+   -moz-box-shadow: 3px 3px 3px 0px rgba(153, 153, 153, 1);
+   box-shadow: 3px 3px 3px 0px rgba(153, 153, 153, 1);
+}
+.shadow_md {
+   -webkit-box-shadow: 5px 5px 8px 0px rgba(153, 153, 153, 1);
+   -moz-box-shadow: 5px 5px 8px 0px rgba(153, 153, 153, 1);
+   box-shadow: 5px 5px 8px 0px rgba(153, 153, 153, 1);
+}
+.shadow_lg {
+   -webkit-box-shadow: 6px 6px 15px 0px rgba(153, 153, 153, 1);
+   -moz-box-shadow: 6px 6px 15px 0px rgba(153, 153, 153, 1);
+   box-shadow: 6px 6px 15px 0px rgba(153, 153, 153, 1);
+}
