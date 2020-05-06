@@ -21,13 +21,15 @@ export const userIsLoggedIn = async (token) => {
    }
 };
 
-export const login = async (user) => {
+export const login = async (email, password) => {
    try {
       const res = await axios.post(serverPath + "/user/login", {
-         email: user.email,
-         password: user.password,
-         caller: "UserFunctions.register",
+         email,
+         password,
+         caller: "UserFunctions.login",
       });
+      console.log("in user functions res.data = ");
+      console.log(res.data);
       return res.data.token;
    } catch (err) {
       console.log("Error (catch) UserFunctions > login" + err);
