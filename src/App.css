@@ -49,3 +49,11 @@ body {
 .displayBlock {
    display: block;
 }
+.alert-warning {
+   border-radius: 3px;
+   border: 1px solid #f0afaf;
+   background-color: #ffdbdb;
+   color: #ad1515;
+   font-size: 0.8em;
+   padding: 8px;
+}

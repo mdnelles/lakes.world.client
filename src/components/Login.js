@@ -6,6 +6,8 @@ import localForage from "localforage";
 export const Login = () => {
    const [email, setEmail] = React.useState("mxnelles@gmail.com"),
       [password, setPassword] = React.useState("pass1WORD"),
+      [warnClass, setWarnClass] = React.useState("displayNone"),
+      [warnMsg, setWarnMsg] = React.useState(""),
       [spinnerClass, setSpinnerClass] = React.useState("displayNone");
 
    const submit = () => {
@@ -20,19 +22,23 @@ export const Login = () => {
          setTimeout(() => {
             setSpinnerClass("displayNone");
          }, 500);
+         setWarnClass("displayBlock");
+         setWarnMsg("Please enter valid credentials");
          // find number of next up slide and then update state of Cube Wrapper to trigger roll
       } else {
          localForage.setItem("token", false); // clear old token if exists
          login(email, password)
             .then((res) => {
                console.log(res);
-               if (parseInt(res) !== null) {
+               if (res !== undefined) {
+                  console.log("token set");
                   localForage.setItem("token", res);
 
                   setTimeout(() => {
-                     window.location.href = "/admin";
+                     //window.location.href = "/admin";
                   }, 350);
                } else {
+                  console.log("no token found");
                   console.log("+++ unhandled error here: " + __filename);
                   setSpinnerClass("displayNone");
                }
@@ -51,6 +57,7 @@ export const Login = () => {
                   <img
                      src='./img/lakesIcon.png'
                      style={{ height: "auto", width: 100, align: "center" }}
+                     alt='Lakes.World'
                   />
                </div>
                <div className={spinnerClass}>
@@ -58,21 +65,21 @@ export const Login = () => {
                </div>
                <Form>
                   <FormGroup>
-                     <Label for='exampleEmail'>Email</Label>
+                     <Label for='em'>Email</Label>
                      <Input
                         type='email'
-                        name='email'
-                        id='exampleEmail'
+                        id='em'
+                        defaultValue={email}
                         placeholder='example@me.com'
                         onChange={(event) => setEmail(event.target.value)}
                      />
                   </FormGroup>
                   <FormGroup>
-                     <Label for='examplePassword'>Password</Label>
+                     <Label for='pw'>Password</Label>
                      <Input
                         type='password'
-                        name='password'
-                        id='examplePassword'
+                        id='pw'
+                        defaultValue={password}
                         placeholder=''
                         onChange={(event) => setPassword(event.target.value)}
                      />
@@ -80,6 +87,8 @@ export const Login = () => {
 
                   <Button onClick={submit}>Submit</Button>
                </Form>
+               <br />
+               <div className={"alert-warning " + warnClass}>{warnMsg}</div>
             </div>
          </div>
       </div>
