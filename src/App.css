@@ -43,6 +43,11 @@ body {
    -moz-box-shadow: 6px 6px 15px 0px rgba(153, 153, 153, 1);
    box-shadow: 6px 6px 15px 0px rgba(153, 153, 153, 1);
 }
+.shadow_blur {
+   -webkit-box-shadow: 21px 20px 42px -10px rgba(179, 179, 179, 1);
+   -moz-box-shadow: 21px 20px 42px -10px rgba(179, 179, 179, 1);
+   box-shadow: 21px 20px 42px -10px rgba(179, 179, 179, 1);
+}
 .displayNone {
    display: none;
 }
