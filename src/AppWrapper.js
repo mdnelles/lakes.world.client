@@ -32,25 +32,25 @@ const goHome = () => {
 
 export const AppWrapper = () => {
    const [activeSession, setActiveSession] = useState("loading");
-
+   console.log("AppWrapper - Start");
    useEffect(() => {
       // pnl
+
       localForage
-         .getItem("token", function (err, theToken) {
-            if (err) {
-               cl("token err -> " + err);
-            } else {
-               userIsLoggedIn(theToken)
-                  .then((data) => {
-                     data === true || data === "true"
-                        ? setActiveSession("ok")
-                        : goHome();
-                  })
-                  .catch((err) => {
-                     cl("user is not logged in " + err);
-                     goHome();
-                  });
-            }
+         .getItem("token1")
+         .then((startToken) => {
+            console.log("Token in AppWrapper = ");
+            console.log(startToken);
+            userIsLoggedIn(startToken)
+               .then((data) => {
+                  data === true || data === "true"
+                     ? setActiveSession("ok")
+                     : goHome();
+               })
+               .catch((err) => {
+                  cl(__filename + " Err: user is not logged in " + err);
+                  goHome();
+               });
          })
          .catch((err) => {
             cl("user is not logged in " + err);

@@ -8,7 +8,7 @@ export const Login = () => {
    const [email, setEmail] = useState("mxnelles@gmail.com"),
       [password, setPassword] = useState("pass1WORD"),
       [warnClass, setWarnClass] = useState("displayNone"),
-      [captchaKey, setCaptchaKey] = useState(""),
+      [captchaKey, setCaptchaKey] = useState("na"),
       [submitClass, setSubmitClass] = useState("displayNone"),
       [warnMsg, setWarnMsg] = useState(""),
       [spinnerClass, setSpinnerClass] = useState("displayNone");
@@ -39,11 +39,11 @@ export const Login = () => {
       } else {
          localForage.setItem("token", false); // clear old token if exists
          login(email, password)
-            .then((res) => {
-               console.log(res);
-               if (res !== undefined) {
-                  console.log("token set");
-                  localForage.setItem("token", res);
+            .then((data) => {
+               if (data.tokenSuccess === true) {
+                  // success: set token and move beyond Auth Wall
+                  localForage.setItem("token1", data.token);
+                  console.log("set token: " + data.token);
 
                   setTimeout(() => {
                      window.location.href = "/admin";
@@ -61,7 +61,7 @@ export const Login = () => {
    };
 
    let captchaPlace = "";
-   if (captchaKey !== undefined && captchaKey !== "") {
+   if (captchaKey !== undefined && captchaKey !== "na") {
       captchaPlace = (
          <Recaptcha
             sitekey={captchaKey}
@@ -74,16 +74,21 @@ export const Login = () => {
    }
 
    React.useEffect(() => {
-      console.log("Login - useEffect");
-      getCaptchaKey().then((data) => {
-         console.log(data);
-         if (data !== undefined && data.length > 10) {
-            setCaptchaKey(data);
-         } else {
-            console.log("Err: not authorized for captch key");
-         }
-      });
-   }, []);
+      if (captchaKey === "na") {
+         console.log("Login - useEffect");
+         // getting the proper key based on dev or production
+         // key is then inserted in to the captcha component
+         getCaptchaKey().then((data) => {
+            if (data !== undefined && data.length > 10) {
+               setTimeout(() => {
+                  setCaptchaKey(data);
+               }, 200); // delay to ensure data is set
+            } else {
+               console.log("Err: not authorized for captch key");
+            }
+         });
+      }
+   }, [captchaKey]);
 
    return (
       <div className='vertical-center center-outer'>
