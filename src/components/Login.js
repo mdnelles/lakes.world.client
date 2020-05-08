@@ -42,7 +42,7 @@ export const Login = () => {
             .then((data) => {
                if (data.tokenSuccess === true) {
                   // success: set token and move beyond Auth Wall
-                  localForage.setItem("token1", data.token);
+                  localForage.setItem("myToken", data.token);
                   console.log("set token: " + data.token);
 
                   setTimeout(() => {

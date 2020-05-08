@@ -8,6 +8,8 @@ import "./App.css";
 
 import { Logs } from "./components/Logs";
 import { Admin } from "./components/Admin";
+import { NavBar } from "./components/NavBar";
+import { Lakes } from "./components/Lakes";
 
 const goHome = () => {
    // putting this in to stop repaid reloading of page on '/'
@@ -31,16 +33,15 @@ const goHome = () => {
 };
 
 export const AppWrapper = () => {
-   const [activeSession, setActiveSession] = useState("loading");
-   console.log("AppWrapper - Start");
+   const [activeSession, setActiveSession] = useState("loading"),
+      [myToken, setMyToken] = useState("na");
+
    useEffect(() => {
       // pnl
-
       localForage
-         .getItem("token1")
+         .getItem("myToken")
          .then((startToken) => {
-            console.log("Token in AppWrapper = ");
-            console.log(startToken);
+            setMyToken(startToken); // using myToken instead of 'token' because of conflict with reCaptcha token
             userIsLoggedIn(startToken)
                .then((data) => {
                   data === true || data === "true"
@@ -65,9 +66,24 @@ export const AppWrapper = () => {
    } else {
       ret = (
          <div>
+            <NavBar />
             <div>
-               <Route exact path='/admin' component={Admin} />
-               <Route exact path='/logs' component={Logs} />
+               <Route
+                  exact
+                  path='/admin'
+                  render={(props) => <Admin {...props} myToken={myToken} />}
+               />
+               <Route
+                  exact
+                  path='/admin/logs'
+                  render={(props) => <Logs {...props} myToken={myToken} />}
+               />
+               <Route
+                  exact
+                  path='/admin/lakes'
+                  render={(props) => <Lakes {...props} myToken={myToken} />}
+               />
+               {/*<Route exact path='/logs' component={Logs} myToken={myToken} />*/}
             </div>
          </div>
       );

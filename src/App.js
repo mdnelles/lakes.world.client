@@ -18,7 +18,8 @@ const App = () => {
                <Route exact path='/' component={Index} />
                <Route exact path='/loading' component={Loading} />
                <Route exact path='/admin' component={AppWrapper} />
-               <Route exact path='/logs' component={AppWrapper} />
+               <Route exact path='/admin/lakes' component={AppWrapper} />
+               <Route exact path='/admin/logs' component={AppWrapper} />
             </Switch>
          </Router>
       </div>
