@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 
 const navTo = (loc) => {
-   console.log(loc);
+   //console.log(loc);
 };
 
 export const NavBar = (props) => {

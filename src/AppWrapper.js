@@ -38,10 +38,13 @@ export const AppWrapper = () => {
 
    useEffect(() => {
       // pnl
+      //console.log(__filename + ".useEffect");
+
       localForage
          .getItem("myToken")
          .then((startToken) => {
-            setMyToken(startToken); // using myToken instead of 'token' because of conflict with reCaptcha token
+            if (myToken === "na") setMyToken(startToken); // using myToken instead of 'token' because of conflict with reCaptcha token
+
             userIsLoggedIn(startToken)
                .then((data) => {
                   data === true || data === "true"
@@ -57,7 +60,7 @@ export const AppWrapper = () => {
             cl("user is not logged in " + err);
             goHome();
          });
-   }, []);
+   }, [myToken]);
 
    var ret = "";
    if (activeSession === "no") {

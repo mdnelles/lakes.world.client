@@ -4,12 +4,12 @@ import { Button, ButtonGroup, ButtonToolbar, Spinner, Table } from "reactstrap";
 import localForage from "localforage";
 import uuid from "uuid";
 
-export const Lakes = (props) => {
-   console.log("ent");
+export const Lakes = () => {
    const [rows, setRows] = useState([]),
       [isLoaded, setIsLoaded] = React.useState(false),
       [page, setPage] = React.useState(0),
       [open, setOpen] = React.useState(false),
+      [myToken, setMyToken] = React.useState("na"),
       [rowsPerPage, setRowsPerPage] = React.useState(10);
 
    const handleClose = () => {
@@ -26,26 +26,28 @@ export const Lakes = (props) => {
    };
 
    useEffect(() => {
-      //loading Api Data"
-      if (isLoaded === false) {
-         getLakes(props.myToken).then((data) => {
-            console.log("data:");
-            console.log(data);
-            //setRows(data[0]);
-            setIsLoaded(true);
-            // "Countries loaded"
-         });
-      }
+      //loading database Data"
+      localForage.getItem("myToken").then((startToken) => {
+         if (isLoaded === false && myToken === "na") {
+            console.log("getLakes with token: " + startToken);
+            setMyToken(startToken);
+            getLakes(startToken).then((data) => {
+               console.log("data:");
+               console.log(data);
+               //setRows(data[0]);
+               setIsLoaded(true);
+               // "Countries loaded"
+            });
+         }
+      });
    }, []);
 
    return (
-      <div id='main' className='body'>
+      <div id='main' className='mainbody'>
          <h3>Lakes</h3>
          <div style={{ padding: 25, display: "block" }}></div>
          <div className='contain' style={{ marginLeft: 10 }}>
             {/* msg goes here */}
-
-            {/* */}
          </div>
          <div style={{ padding: 15, display: "block" }}></div>
          {isLoaded === false ? (
