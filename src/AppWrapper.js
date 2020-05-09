@@ -85,7 +85,7 @@ export const AppWrapper = () => {
                />
 
                <Route exact path='/admin/lakes' component={Lakes} />
-               <Route exact path='/codeBuilder' component={CodeBuilder} />
+               <Route exact path='/admin/codeBuilder' component={CodeBuilder} />
 
                {/*<Route exact path='/logs' component={Logs} myToken={myToken} />*/}
             </div>
