@@ -16,6 +16,7 @@ import {
 
 const navTo = (loc) => {
    //console.log(loc);
+   window.location.href = loc;
 };
 
 export const NavBar = (props) => {
@@ -43,12 +44,17 @@ export const NavBar = (props) => {
                         Site Admin
                      </DropdownToggle>
                      <DropdownMenu right>
-                        <DropdownItem onClick={navTo("/admin/logs")}>
+                        <DropdownItem onClick={() => navTo("/admin/logs")}>
                            Logs
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem onClick={navTo("weather")}>
+                        <DropdownItem onClick={() => navTo("weather")}>
                            Weather
+                        </DropdownItem>
+                        <DropdownItem
+                           onClick={() => navTo("/admin/codeBuilder")}
+                        >
+                           Code Builder
                         </DropdownItem>
                      </DropdownMenu>
                   </UncontrolledDropdown>

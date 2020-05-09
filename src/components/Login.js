@@ -5,6 +5,7 @@ import localForage from "localforage";
 import Recaptcha from "react-recaptcha";
 
 export const Login = () => {
+   console.log(" > Login.js");
    const [email, setEmail] = useState("mxnelles@gmail.com"),
       [password, setPassword] = useState("pass1WORD"),
       [warnClass, setWarnClass] = useState("displayNone"),
@@ -14,7 +15,7 @@ export const Login = () => {
       [spinnerClass, setSpinnerClass] = useState("displayNone");
 
    const captcha = (event) => {
-      console.log(event);
+      //console.log(event);
       setSubmitClass("displayBlock");
    };
 
@@ -43,14 +44,13 @@ export const Login = () => {
                if (data.tokenSuccess === true) {
                   // success: set token and move beyond Auth Wall
                   localForage.setItem("myToken", data.token);
-                  console.log("set token: " + data.token);
+                  //console.log("set token: " + data.token);
 
                   setTimeout(() => {
                      window.location.href = "/admin";
                   }, 350);
                } else {
                   console.log("no token found");
-                  console.log("+++ unhandled error here: " + __filename);
                   setSpinnerClass("displayNone");
                }
             })

@@ -8,6 +8,7 @@ import { AppWrapper } from "./AppWrapper";
 import { Login } from "./components/Login";
 import { Loading } from "./components/Loading";
 import { Index } from "./components/Index";
+import { Error } from "./components/Utils/Error";
 
 const App = () => {
    return (
@@ -16,10 +17,12 @@ const App = () => {
             <Switch>
                <Route exact path='/login' component={Login} />
                <Route exact path='/' component={Index} />
+               <Route exact path='/err/:qry' component={Error} />
                <Route exact path='/loading' component={Loading} />
                <Route exact path='/admin' component={AppWrapper} />
                <Route exact path='/admin/lakes' component={AppWrapper} />
                <Route exact path='/admin/logs' component={AppWrapper} />
+               <Route exact path='/admin/codeBuilder' component={AppWrapper} />
             </Switch>
          </Router>
       </div>

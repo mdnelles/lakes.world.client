@@ -15,7 +15,7 @@ export const userIsLoggedIn = async (token) => {
       });
       return res.data;
    } catch (err) {
-      console.log("Err (catch) UserFunctions > userIsLoggedIn ... " + err);
+      console.log("Err (catch) UserFunctions.userIsLoggedIn ... " + err);
       document.location.href = "/";
       return false;
    }
@@ -28,18 +28,17 @@ export const login = async (email, password) => {
          password,
          caller: "UserFunctions.login",
       });
-      console.log("in user functions res.data = ");
-      console.log(res.data);
+
       return res.data;
    } catch (err) {
-      console.log("Error (catch) UserFunctions > login" + err);
+      console.log("Error (catch) UserFunctions.login" + err);
       return 0;
    }
 };
 
 export const logout = () => {
    localForage.removeItem("token").then(() => {
-      console.log("token cleared");
+      //console.log("token cleared");
       window.location.href = "/";
    });
 };

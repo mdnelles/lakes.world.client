@@ -3,8 +3,7 @@ import localForage from "localforage";
 import uuid from "uuid";
 
 export const Admin = (props) => {
-   console.log(props.myToken);
-   console.log(props.myVar);
+   console.log(" > Admin.js");
    //const [token, setToken] = useState('');
 
    useEffect(() => {}, []);

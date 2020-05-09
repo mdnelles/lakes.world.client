@@ -10,6 +10,7 @@ import { Logs } from "./components/Logs";
 import { Admin } from "./components/Admin";
 import { NavBar } from "./components/NavBar";
 import { Lakes } from "./components/Lakes";
+import { CodeBuilder } from "./components/Private/CodeBuilder";
 
 const goHome = () => {
    // putting this in to stop repaid reloading of page on '/'
@@ -18,7 +19,7 @@ const goHome = () => {
    if (loc.includes(3000)) {
       temp = loc.split("3000");
       if (temp[1] !== undefined && temp[1].toString().length > 1) {
-         window.location.href = "/login";
+         window.location.href = "/err/AppWrapper1";
       }
    } else {
       // this is for prodcution if it is residing on a domain
@@ -26,7 +27,7 @@ const goHome = () => {
       if (loc.includes("/")) {
          temp = loc.split("/");
          if (temp[1] !== undefined && temp[1].toString().length > 1) {
-            window.location.href = "/";
+            window.location.href = "/err/AppWrapper2";
          }
       }
    }
@@ -38,7 +39,7 @@ export const AppWrapper = () => {
 
    useEffect(() => {
       // pnl
-      //console.log(__filename + ".useEffect");
+      console.log("AppWrapper.useEffect");
 
       localForage
          .getItem("myToken")
@@ -65,7 +66,8 @@ export const AppWrapper = () => {
    var ret = "";
    if (activeSession === "no") {
       cl("AppWRapper.js.no active session routing to login page");
-      ret = <Redirect to='/login' />;
+      ret = <Redirect to='/' />;
+      ret = <Redirect to='/err/Appwrapper3' />;
    } else {
       ret = (
          <div>
@@ -81,11 +83,10 @@ export const AppWrapper = () => {
                   path='/admin/logs'
                   render={(props) => <Logs {...props} myToken={myToken} />}
                />
-               <Route
-                  exact
-                  path='/admin/lakes'
-                  render={(props) => <Lakes {...props} myToken={myToken} />}
-               />
+
+               <Route exact path='/admin/lakes' component={Lakes} />
+               <Route exact path='/codeBuilder' component={CodeBuilder} />
+
                {/*<Route exact path='/logs' component={Logs} myToken={myToken} />*/}
             </div>
          </div>

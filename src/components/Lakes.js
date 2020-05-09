@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { getLakes } from "./LakesFunctions";
-import { Button, ButtonGroup, ButtonToolbar, Spinner, Table } from "reactstrap";
+import {
+   Button,
+   ButtonGroup,
+   ButtonToolbar,
+   Input,
+   Spinner,
+   Table,
+} from "reactstrap";
+
 import localForage from "localforage";
 import uuid from "uuid";
 
@@ -21,7 +29,7 @@ export const Lakes = () => {
    };
 
    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
+      setRowsPerPage(event.target.value);
       setPage(0);
    };
 
@@ -29,12 +37,10 @@ export const Lakes = () => {
       //loading database Data"
       localForage.getItem("myToken").then((startToken) => {
          if (isLoaded === false && myToken === "na") {
-            console.log("getLakes with token: " + startToken);
             setMyToken(startToken);
             getLakes(startToken).then((data) => {
-               console.log("data:");
                console.log(data);
-               //setRows(data[0]);
+               setRows(data);
                setIsLoaded(true);
                // "Countries loaded"
             });
@@ -45,7 +51,6 @@ export const Lakes = () => {
    return (
       <div id='main' className='mainbody'>
          <h3>Lakes</h3>
-         <div style={{ padding: 25, display: "block" }}></div>
          <div className='contain' style={{ marginLeft: 10 }}>
             {/* msg goes here */}
          </div>
@@ -54,13 +59,27 @@ export const Lakes = () => {
             <Spinner size='sm' color='primary' />
          ) : (
             <div className='paperStyle'>
-               <Table>
+               <Table hover striped size='sm' style={{ fontSize: ".8em" }}>
                   <thead>
-                     <tr>
-                        <td>location</td>
-                        <td>Date</td>
-                        <td>Lon</td>
-                        <td>Lat</td>
+                     <tr
+                        style={{
+                           color: "#eeeeee",
+                           backgroundColor: "#555555",
+                           paddingBottom: "10px",
+                        }}
+                     >
+                        <td>Lake Name</td>
+                        <td>Countries</td>
+                        <td>Cont</td>
+                        <td>lat/lon</td>
+                        <td>Alt</td>
+                        <td>SA(km/s)</td>
+                        <td>Depth</td>
+                        <td>Volume</td>
+                        <td>Shore(km)</td>
+                        <td>
+                           Vol(m<sup>2</sup>)
+                        </td>
                         <td>Commands</td>
                      </tr>
                   </thead>
@@ -73,18 +92,27 @@ export const Lakes = () => {
                         .map((row) => {
                            return (
                               <tr key={uuid()}>
-                                 <td>{row.ci + "," + row.ps + "," + row.co}</td>
-                                 <td>{row.date}</td>
-                                 <td>{row.lon}</td>
-                                 <td>{row.lat}</td>
+                                 <td>{row.lName}</td>
+                                 <td>{row.countries}</td>
+                                 <td>{row.continent}</td>
+                                 <td>
+                                    <span stlye={{ color: "#00D" }}>
+                                       {row.gLat + "/" + row.gLon}
+                                    </span>
+                                 </td>
+                                 <td>{row.Altitude}</td>
+                                 <td>{row.SurfaceArea}</td>
+                                 <td>{row.MaxDepth}</td>
+                                 <td>{row.Volume}</td>
+                                 <td>{row.Shoreline}</td>
+                                 <td>{row.Volume}</td>
                                  <td>
                                     <ButtonGroup
-                                       size='small'
-                                       color='primary'
-                                       variant='contained'
-                                       aria-label='small primary button group'
+                                       size='sm'
+                                       color='secondary'
+                                       style={{ fontSize: ".7em" }}
                                     >
-                                       <Button>
+                                       <Button color='secondary'>
                                           <span id={1}>View</span>
                                        </Button>
 
@@ -94,6 +122,51 @@ export const Lakes = () => {
                               </tr>
                            );
                         })}
+                     <tr style={{ backgroundColor: "#a7b4f2" }}>
+                        <td colspan='1'>
+                           Per Page:
+                           <Input
+                              type='select'
+                              name='select'
+                              id='exampleSelect'
+                              onChange={(event) =>
+                                 handleChangeRowsPerPage(event)
+                              }
+                              size='sm'
+                           >
+                              <option value={5}>5</option>
+                              <option value={10} Selected>
+                                 10
+                              </option>
+                              <option value={25}>25</option>
+                              <option value={50}>50</option>
+                              <option value={100}>100</option>
+                           </Input>
+                        </td>
+                        <td>
+                           Goto Page:
+                           <Input
+                              type='select'
+                              name='select'
+                              id='exampleSelect'
+                              onChange={(event) =>
+                                 handleChangeRowsPerPage(event)
+                              }
+                              size='sm'
+                           >
+                              <option value={5}>5</option>
+                              <option value={10} Selected>
+                                 10
+                              </option>
+                              <option value={25}>25</option>
+                              <option value={50}>50</option>
+                              <option value={100}>100</option>
+                           </Input>
+                        </td>
+
+                        <td></td>
+                        <td colspan='8'></td>
+                     </tr>
                   </tbody>
                </Table>
                {/*  
