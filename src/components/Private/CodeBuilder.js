@@ -30,7 +30,6 @@ export const CodeBuilder = () => {
             getTables(startToken).then((obj) => {
                let temp = [];
                obj.data[0].forEach((e, i) => {
-                  console.log(e.Tables_in_lakes_world);
                   temp.push(e.Tables_in_lakes_world);
                });
                console.log(temp);
