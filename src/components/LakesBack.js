@@ -47,7 +47,6 @@ export const Lakes = () => {
 
    const changeRowsPerPage = (event) => {
       setRowsPerPage(event.target.value);
-      setMaxPage(Math.ceil(totalRows / event.target.value));
       setPage(0);
    };
 
@@ -73,17 +72,8 @@ export const Lakes = () => {
    }, [page, rowsPerPage]);
 
    let pageNumbers = [];
-   let pageNumbersPartial = [];
-
-   // create an array with just the n number of result concetrated on teh current page
-   // this is done so that pagination does not run out of bounds on really high page counts
-   let ttlPaginations = 5;
-   if (page > ttlPaginations)
-      for (let i = 1; i < maxPage; i++) {
-         if (maxPage > 5) pageNumbersPartial.push(i);
-      }
-
-   for (let i = 1; i < maxPage; i++) {
+   setMaxPage(Math.ceil(totalRows / rowsPerPage));
+   for (let i = 1; i < Math.ceil(totalRows / rowsPerPage); i++) {
       pageNumbers.push(i);
    }
 
@@ -98,7 +88,7 @@ export const Lakes = () => {
    const renderedPages = pageNumbers.map((number) => {
       return (
          <PaginationItem>
-            <PaginationLink href='javascript:void()'>{number}</PaginationLink>
+            <PaginationLink href='#'>{number}</PaginationLink>
          </PaginationItem>
       );
    });
@@ -216,14 +206,14 @@ export const Lakes = () => {
                   <PaginationItem>
                      <PaginationLink
                         first
-                        href='javascript:void()'
+                        href='#'
                         onClick={() => setPage(0)}
                      />
                   </PaginationItem>
                   <PaginationItem>
                      <PaginationLink
                         previous
-                        href='javascript:void()'
+                        href='#'
                         onClick={() => backOnePage()}
                      />
                   </PaginationItem>
@@ -233,14 +223,14 @@ export const Lakes = () => {
                   <PaginationItem>
                      <PaginationLink
                         next
-                        href='javascript:void()'
+                        href='#'
                         onClick={() => aheadOnePage()}
                      />
                   </PaginationItem>
                   <PaginationItem>
                      <PaginationLink
                         last
-                        href='javascript:void()'
+                        href='#'
                         onClick={() => setPage(maxPage)}
                      />
                   </PaginationItem>
