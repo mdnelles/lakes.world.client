@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getLakes } from "./LakesFunctions";
-import {
-   Button,
-   ButtonGroup,
-   ButtonToolbar,
-   Input,
-   Pagination,
-   PaginationItem,
-   PaginationLink,
-   Spinner,
-   Table,
-} from "reactstrap";
+import Pagination from "react-js-pagination";
+import { Button, ButtonGroup, Input, Spinner, Table } from "reactstrap";
 
 import localForage from "localforage";
 import uuid from "uuid";
 
-const Option = (props) => {
-   return <option value={props.value}>{props.value}</option>;
-};
+// sending
 
 export const Lakes = () => {
    const [rows, setRows] = useState([]),
@@ -28,27 +17,9 @@ export const Lakes = () => {
       [maxPage, setMaxPage] = useState(0),
       [myToken, setMyToken] = useState("na");
 
-   const changePage = (event) => {
-      console.log(event.target.value);
-      setPage(event.target.value);
-   };
-
-   const aheadOnePage = () => {
-      let t = page + 1;
-      t <= maxPage ? (t = t) : (t = maxPage);
-      setPage(t);
-   };
-
-   const backOnePage = () => {
-      let t = page - 1;
-      t < 0 ? (t = 0) : (t = t);
-      setPage(t);
-   };
-
-   const changeRowsPerPage = (event) => {
-      setRowsPerPage(event.target.value);
-      setMaxPage(Math.ceil(totalRows / event.target.value));
-      setPage(0);
+   const handlePageChange = (pageNumber) => {
+      console.log(`active page is ${pageNumber}`);
+      setPage(pageNumber);
    };
 
    useEffect(() => {
@@ -61,6 +32,7 @@ export const Lakes = () => {
                   if (data !== undefined) setTotalRows(data.length);
                   console.log(data);
                   setRows(data);
+                  setTotalRows(data.length);
                   setIsLoaded(true);
 
                   console.log("length = " + data.length);
@@ -72,48 +44,13 @@ export const Lakes = () => {
       }
    }, [page, rowsPerPage]);
 
-   let pageNumbers = [];
-   let pageNumbersPartial = [];
-
-   // create an array with just the n number of result concetrated on teh current page
-   // this is done so that pagination does not run out of bounds on really high page counts
-   let ttlPaginations = 5;
-   if (page > ttlPaginations)
-      for (let i = 1; i < maxPage; i++) {
-         if (maxPage > 5) pageNumbersPartial.push(i);
-      }
-
-   for (let i = 1; i < maxPage; i++) {
-      pageNumbers.push(i);
-   }
-
-   const rederedOptions = pageNumbers.map((number) => {
-      return (
-         <option key={number} id={number}>
-            {number}
-         </option>
-      );
-   });
-
-   const renderedPages = pageNumbers.map((number) => {
-      return (
-         <PaginationItem>
-            <PaginationLink href='javascript:void()'>{number}</PaginationLink>
-         </PaginationItem>
-      );
-   });
-
    return (
-      <div id='main' className='mainbody'>
+      <div id='main' className='paperStyle'>
          <h3>Lakes</h3>
-         <div className='contain' style={{ marginLeft: 10 }}>
-            {/* msg goes here */}
-         </div>
-         <div style={{ padding: 15, display: "block" }}></div>
          {isLoaded === false ? (
             <Spinner size='sm' color='primary' />
          ) : (
-            <div className='paperStyle'>
+            <div className='respTable'>
                <Table hover striped size='sm' style={{ fontSize: ".8em" }}>
                   <thead>
                      <tr
@@ -130,10 +67,9 @@ export const Lakes = () => {
                         <td>Alt</td>
                         <td>SA(km/s)</td>
                         <td>Depth</td>
-                        <td>Volume</td>
                         <td>Shore(km)</td>
                         <td>
-                           Vol(m<sup>2</sup>)
+                           Vol(km<sup>2</sup>)
                         </td>
                         <td>Commands</td>
                      </tr>
@@ -158,93 +94,38 @@ export const Lakes = () => {
                                  <td>{row.Altitude}</td>
                                  <td>{row.SurfaceArea}</td>
                                  <td>{row.MaxDepth}</td>
-                                 <td>{row.Volume}</td>
                                  <td>{row.Shoreline}</td>
                                  <td>{row.Volume}</td>
                                  <td>
                                     <ButtonGroup
                                        size='sm'
-                                       color='secondary'
                                        style={{ fontSize: ".7em" }}
                                     >
-                                       <Button color='secondary'>
+                                       <Button outline color='primary'>
                                           <span id={1}>View</span>
                                        </Button>
-
-                                       <Button>Delete</Button>
+                                       <Button outline color='primary'>
+                                          Edit
+                                       </Button>
+                                       <Button outline color='danger'>
+                                          Delete
+                                       </Button>
                                     </ButtonGroup>
                                  </td>
                               </tr>
                            );
                         })}
-                     <tr style={{ backgroundColor: "#a7b4f2" }}>
-                        <td colspan='1'>
-                           Per Page:
-                           <Input
-                              type='select'
-                              name='select'
-                              id='exampleSelect'
-                              onChange={(event) => changeRowsPerPage(event)}
-                              size='sm'
-                           >
-                              <option value={10} Selected>
-                                 10
-                              </option>
-                              <option value={25}>25</option>
-                              <option value={50}>50</option>
-                              <option value={100}>100</option>
-                           </Input>
-                        </td>
-                        <td>
-                           Goto Page:
-                           <Input
-                              type='select'
-                              onChange={(event) => changePage(event)}
-                              size='sm'
-                           >
-                              {rederedOptions}
-                           </Input>
-                        </td>
-
-                        <td></td>
-                        <td colspan='8'></td>
-                     </tr>
                   </tbody>
                </Table>
-
-               <Pagination size='sm' aria-label='Page navigation example'>
-                  <PaginationItem>
-                     <PaginationLink
-                        first
-                        href='javascript:void()'
-                        onClick={() => setPage(0)}
-                     />
-                  </PaginationItem>
-                  <PaginationItem>
-                     <PaginationLink
-                        previous
-                        href='javascript:void()'
-                        onClick={() => backOnePage()}
-                     />
-                  </PaginationItem>
-
-                  {renderedPages}
-
-                  <PaginationItem>
-                     <PaginationLink
-                        next
-                        href='javascript:void()'
-                        onClick={() => aheadOnePage()}
-                     />
-                  </PaginationItem>
-                  <PaginationItem>
-                     <PaginationLink
-                        last
-                        href='javascript:void()'
-                        onClick={() => setPage(maxPage)}
-                     />
-                  </PaginationItem>
-               </Pagination>
+               <Pagination
+                  activePage={page}
+                  itemsCountPerPage={rowsPerPage}
+                  totalItemsCount={totalRows}
+                  pageRangeDisplayed={5}
+                  onChange={(event) => handlePageChange(event)}
+                  itemClass='page-item'
+                  linkClass='page-link'
+               />
             </div>
          )}
       </div>

@@ -31,14 +31,20 @@ export const NavBar = (props) => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                <Nav className='mr-auto' navbar>
-                  <NavItem>
-                     <NavLink href='/admin/lakes'>Browse Lakes</NavLink>
-                  </NavItem>
-                  <NavItem>
-                     <NavLink href='https://www.un.org/en/sections/resources-different-audiences/'>
-                        Data Source
-                     </NavLink>
-                  </NavItem>
+                  <UncontrolledDropdown nav inNavbar>
+                     <DropdownToggle nav caret>
+                        Lakes
+                     </DropdownToggle>
+                     <DropdownMenu right>
+                        <DropdownItem onClick={() => navTo("/admin/lakes")}>
+                           Browse
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={() => navTo("/admin/addLake")}>
+                           Add
+                        </DropdownItem>
+                     </DropdownMenu>
+                  </UncontrolledDropdown>
                   <UncontrolledDropdown nav inNavbar>
                      <DropdownToggle nav caret>
                         Site Admin
@@ -58,8 +64,16 @@ export const NavBar = (props) => {
                         </DropdownItem>
                      </DropdownMenu>
                   </UncontrolledDropdown>
+                  <NavItem>
+                     <NavLink href='https://www.un.org/en/sections/resources-different-audiences/'>
+                        Data Source
+                     </NavLink>
+                  </NavItem>
                </Nav>
-               <NavbarText>CP</NavbarText>
+
+               <NavbarText>
+                  <img src='/apple-touch-icon.png' alt='Lakes.World' />
+               </NavbarText>
             </Collapse>
          </Navbar>
       </div>

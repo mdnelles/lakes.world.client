@@ -72,4 +72,10 @@ body {
    -webkit-box-shadow: 3px 3px 6px 0px rgba(209, 209, 209, 1);
    -moz-box-shadow: 3px 3px 6px 0px rgba(209, 209, 209, 1);
    box-shadow: 3px 3px 6px 0px rgba(209, 209, 209, 1);
+   margin: 8px;
+   padding: 8px;
+}
+.respTable {
+   overflow-y: scroll;
+   margin: 5px;
 }
