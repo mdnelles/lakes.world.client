@@ -10,6 +10,7 @@ import { Logs } from "./components/Logs";
 import { Admin } from "./components/Admin";
 import { NavBar } from "./components/NavBar";
 import { Lakes } from "./components/Lakes";
+import { AddLake } from "./components/AddLake";
 import { CodeBuilder } from "./components/Private/CodeBuilder";
 
 const goHome = () => {
@@ -84,6 +85,7 @@ export const AppWrapper = () => {
                   render={(props) => <Logs {...props} myToken={myToken} />}
                />
 
+               <Route exact path='/admin/addlake' component={AddLake} />
                <Route exact path='/admin/lakes' component={Lakes} />
                <Route exact path='/admin/codeBuilder' component={CodeBuilder} />
 

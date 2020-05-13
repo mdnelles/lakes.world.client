@@ -21,6 +21,7 @@ const App = () => {
                <Route exact path='/loading' component={Loading} />
                <Route exact path='/admin' component={AppWrapper} />
                <Route exact path='/admin/lakes' component={AppWrapper} />
+               <Route exact path='/admin/addlake' component={AppWrapper} />
                <Route exact path='/admin/logs' component={AppWrapper} />
                <Route exact path='/admin/codeBuilder' component={AppWrapper} />
             </Switch>

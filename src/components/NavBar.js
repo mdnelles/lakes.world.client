@@ -40,7 +40,7 @@ export const NavBar = (props) => {
                            Browse
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem onClick={() => navTo("/admin/addLake")}>
+                        <DropdownItem onClick={() => navTo("/admin/addlake")}>
                            Add
                         </DropdownItem>
                      </DropdownMenu>
